@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer.TW Presentation</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'slide-up': 'slideUp 0.8s ease-out forwards',
+                        'slide-in-right': 'slideInRight 0.6s ease-out forwards',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- React & Babel Standalone (for running directly in browser) -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #020617; }
+        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .gradient-text { background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // --- CONSTANTS & DATA ---
+        
+        const SlideType = {
+            TITLE: 'TITLE',
+            PERSONA: 'PERSONA',
+            CONCEPT: 'CONCEPT',
+            FEATURE: 'FEATURE',
+            CLOSING: 'CLOSING'
+        };
+
+        const THEME_COLORS = {
+            primary: 'bg-slate-950',
+            secondary: 'bg-indigo-950',
+            accent: 'text-amber-400',
+            accentBg: 'bg-amber-400',
+            text: 'text-slate-50',
+            textMuted: 'text-slate-400',
+        };
+
+        const SLIDES = [
+            {
+                id: 'intro',
+                type: SlideType.TITLE,
+                title: 'Volunteer.TW',
+                subtitle: '台灣志工 社會影響力連結系統',
+                content: '讓每一份善意，都能找到它的座標',
+            },
+            {
+                id: 'persona-1',
+                type: SlideType.PERSONA,
+                title: '長者長青協會 總幹事 沈先生',
+                subtitle: '發展瓶頸：難以吸引年輕志工、資源匱乏',
+                content: '“我很需要有志工能幫忙操作電腦或跑腿送餐，但志工好難找，我不知道該怎麼宣傳需求，也沒有預算請專業人。”',
+                // UPDATED: Now points to root file
+                image: 'public/image/jake.png', 
+            },
+            {
+                id: 'persona-2',
+                type: SlideType.PERSONA,
+                title: '國小老師 李老師',
+                subtitle: '職責超載：教學與導護的兩難',
+                content: '“每天非常忙碌，需要關心學生，又要精進教學。但學校導護志工不夠，再累也不能犧牲孩子的安全。真心希望有人能幫我擔任導護。”',
+                // Amy / Teacher
+                image: 'public/image/amy.png', 
+            },
+            {
+                id: 'persona-3',
+                type: SlideType.PERSONA,
+                title: '前會計師 / 全職媽媽 歐媽媽',
+                subtitle: '渴望連結：專長閒置與社會脫節',
+                content: '“孩子上學時，我想利用我的專長做些有意義的事，也想認識新朋友，可我不知道哪裡有管道。”',
+                // Morning / Mom
+                image: 'public/image/morning.jpg', 
+            },
+            {
+                id: 'persona-4',
+                type: SlideType.PERSONA,
+                title: '大學生 王同學',
+                subtitle: '迷惘青年：有熱忱卻無處發揮',
+                content: '“我想透過志工累積社團或工作以外的經驗，對未來找工作會有幫助。幫助別人後收到的感謝也很有成就感，可是我不知道哪裡是我可以去幫忙的。”',
+                // Kevin / Student
+                image: 'public/image/kevin.png', 
+            },
+            {
+                id: 'solution',
+                type: SlideType.CONCEPT,
+                title: '將台灣的志工任務遊戲化',
+                subtitle: '一個將無形的善意，轉化為有形的影響力數據的任務平台',
+                content: '結合 AI 即時鼓勵及平衡志工資源',
+            },
+            {
+                id: 'feature-1',
+                type: SlideType.FEATURE,
+                title: '機會瀏覽',
+                subtitle: '智能匹配，精準對接',
+                content: [
+                '志工依興趣、時間、技能探索機會',
+                'AI 主動推薦符合的機會',
+                '瀏覽可能有興趣的活動'
+                ],
+                // TODO: REPLACE_WITH_YOUR_IMAGE_URL
+                image: 'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'feature-2',
+                type: SlideType.FEATURE,
+                title: 'AI 分流與權重鼓勵機制',
+                subtitle: '優化資源配置，提升公益效率',
+                content: [
+                '透過 AI 引導，將人力分散到真正缺人的地方',
+                '權重機制，鼓勵高專業人才投入',
+                '時間與技術的平衡'
+                ],
+                // TODO: REPLACE_WITH_YOUR_IMAGE_URL
+                image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'feature-3',
+                type: SlideType.FEATURE,
+                title: '榮耀，是最強的驅動力',
+                subtitle: '打造社會楷模，建立良善循環',
+                content: [
+                '優越感：志工專屬優惠（優先購物、購票等特殊權利）',
+                '數位證明：善行區塊鏈公益履歷',
+                '引導機制：限制兌換以鼓勵不同領域的投入（如科技業支持教育）'
+                ],
+                // TODO: REPLACE_WITH_YOUR_IMAGE_URL
+                image: 'https://images.unsplash.com/photo-1533227297464-9429738d1968?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'feature-4',
+                type: SlideType.FEATURE,
+                title: '志工管理',
+                subtitle: '結合正式志工制度，專業化運作',
+                content: [
+                '完成培訓認證',
+                '通過考核機制',
+                '累積服務時數',
+                '機構志工時數總量管制'
+                ],
+                // TODO: REPLACE_WITH_YOUR_IMAGE_URL
+                image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'closing',
+                type: SlideType.CLOSING,
+                title: 'Volunteer.TW',
+                subtitle: '讓志工成為社會的楷模',
+                content: '讓我們一起建立台灣的善意循環經濟',
+            }
+        ];
+
+        // --- ICONS ---
+
+        const Icons = {
+            Quote: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor" className="text-amber-500/20"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/></svg>
+            ),
+            Target: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-amber-400"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            ),
+            Users: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            ),
+            Building: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+            ),
+            Briefcase: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            )
+        };
+
+        // --- COMPONENTS ---
+
+        const PhoneMockup = ({ image }) => (
+            <div className="relative mx-auto border-slate-900 bg-slate-950 border-[10px] md:border-[14px] rounded-[2rem] md:rounded-[2.5rem] h-[400px] md:h-[600px] w-[200px] md:w-[300px] shadow-2xl flex-shrink-0">
+                <div className="w-[80px] md:w-[148px] h-[18px] bg-slate-900 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute z-10"></div>
+                <div className="h-[32px] w-[3px] bg-slate-800 absolute -start-[13px] md:-start-[17px] top-[72px] rounded-s-lg"></div>
+                <div className="h-[46px] w-[3px] bg-slate-800 absolute -start-[13px] md:-start-[17px] top-[124px] rounded-s-lg"></div>
+                <div className="h-[46px] w-[3px] bg-slate-800 absolute -start-[13px] md:-start-[17px] top-[178px] rounded-s-lg"></div>
+                <div className="h-[64px] w-[3px] bg-slate-800 absolute -end-[13px] md:-end-[17px] top-[142px] rounded-e-lg"></div>
+                <div className="rounded-[1.4rem] md:rounded-[2rem] overflow-hidden w-full h-full bg-slate-900 relative">
+                    <img src={image} className="w-full h-full object-cover opacity-90" alt="App Screen" />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none"></div>
+                </div>
+            </div>
+        );
+
+        const TitleSlide = ({ data }) => (
+            <div className="flex flex-col items-center justify-center h-full text-center px-4 relative z-10">
+                <div className="animate-slide-up">
+                    <h2 className={`text-xl md:text-2xl font-light tracking-[0.3em] uppercase mb-4 ${THEME_COLORS.accent}`}>
+                        {data.subtitle}
+                    </h2>
+                    <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-400 drop-shadow-2xl">
+                        {data.title}
+                    </h1>
+                    <div className="w-24 h-1 bg-amber-400 mx-auto mb-8 rounded-full"></div>
+                    <p className="text-xl md:text-3xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
+                        {data.content}
+                    </p>
+                </div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[100px] -z-10 animate-pulse-slow"></div>
+            </div>
+        );
+
+        const PersonaSlide = ({ data }) => (
+            <div className="flex flex-col md:flex-row items-center h-full max-w-7xl mx-auto px-6 md:px-12 gap-12">
+                <div className="w-full md:w-1/2 animate-slide-in-right order-2 md:order-1">
+                    <div className="relative aspect-[3/4] md:aspect-square w-full max-w-md mx-auto rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 group">
+                        <img 
+                            src={data.image} 
+                            alt={data.title} 
+                            // ADDED: Error handler to visualize if image is broken
+                            onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'flex';
+                            }}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        {/* Fallback Display if image fails */}
+                        <div style={{display:'none'}} className="absolute inset-0 bg-red-900/80 flex items-center justify-center text-white font-bold text-center p-4">
+                            IMAGE NOT FOUND:<br/>{data.image}
+                        </div>
+
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+                        <div className="absolute bottom-6 left-6 right-6 pointer-events-none">
+                            <div className="text-2xl font-bold text-white">{data.title}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div className="w-full md:w-1/2 order-1 md:order-2 animate-slide-up">
+                    <div className="glass-panel p-8 md:p-10 rounded-2xl relative">
+                        <div className="absolute -top-6 -left-2"><Icons.Quote /></div>
+                        <h3 className="text-2xl md:text-3xl font-bold mb-2 text-white">{data.title}</h3>
+                        <h4 className={`text-lg md:text-xl mb-8 ${THEME_COLORS.accent} font-medium`}>{data.subtitle}</h4>
+                        <blockquote className="text-xl md:text-2xl text-slate-200 leading-relaxed italic border-l-4 border-amber-400 pl-6 my-6">
+                            {data.content}
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const ConceptSlide = ({ data }) => (
+            <div className="flex flex-col items-center justify-center h-full text-center px-6 relative">
+                <div className="animate-slide-up max-w-4xl mx-auto">
+                    <div className="inline-block p-4 rounded-full bg-amber-400/10 mb-8 border border-amber-400/20">
+                        <Icons.Target />
+                    </div>
+                    <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">
+                        {data.title}
+                    </h2>
+                    <div className="h-px w-full max-w-xs bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mb-8"></div>
+                    <h3 className="text-2xl md:text-3xl font-light text-slate-200 mb-8">
+                        {data.subtitle}
+                    </h3>
+                    <div className="text-lg text-slate-400 uppercase tracking-[0.2em] font-medium">
+                        {data.content}
+                    </div>
+                </div>
+                <div className="absolute inset-0 overflow-hidden -z-10">
+                    <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(251,191,36,0.05),transparent_70%)]"></div>
+                </div>
+            </div>
+        );
+
+        const FeatureSlide = ({ data }) => (
+            // Decreased max-width to max-w-5xl and reduced gap to bring items closer to center
+            <div className="flex flex-col md:flex-row h-full max-w-5xl mx-auto items-center justify-center px-6 md:px-12 gap-6 md:gap-10">
+                
+                {/* Text Section - Adjusted to be closer to center */}
+                <div className="w-full md:w-1/2 animate-slide-in-right order-2 md:order-1 flex flex-col justify-center">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">{data.title}</h2>
+                    <h3 className="text-xl md:text-2xl text-slate-300 mb-10 font-light">{data.subtitle}</h3>
+                    
+                    <ul className="space-y-6">
+                        {data.content.map((point, idx) => (
+                            <li key={idx} className="flex items-start group">
+                                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-amber-400/10 flex items-center justify-center mr-4 text-amber-400 group-hover:bg-amber-400 group-hover:text-slate-900 transition-colors duration-300">
+                                    <span className="text-sm font-bold">{idx + 1}</span>
+                                </span>
+                                <span className="text-xl md:text-2xl text-slate-200 leading-tight pt-1">{point}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                {/* Phone Mockup Section - Adjusted to be closer to center */}
+                <div className="w-full md:w-1/2 animate-slide-up flex justify-center order-1 md:order-2">
+                    <div className="relative">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[650px] bg-amber-400/20 blur-[80px] rounded-full -z-10"></div>
+                        <PhoneMockup image={data.image || ''} />
+                    </div>
+                </div>
+            </div>
+        );
+
+        const CycleEcosystem = () => (
+            <div className="relative w-64 h-64 md:w-80 md:h-80 mx-auto animate-pulse-slow">
+                <div className="absolute inset-0 border-2 border-dashed border-slate-700 rounded-full animate-[spin_60s_linear_infinite]"></div>
+                <div className="absolute inset-0 bg-amber-400/5 blur-3xl rounded-full"></div>
+
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group">
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-slate-900 border border-amber-400/30 flex items-center justify-center shadow-[0_0_30px_rgba(251,191,36,0.1)] transition-transform duration-300 group-hover:scale-110 text-amber-400">
+                        <Icons.Building />
+                    </div>
+                    <div className="mt-2 text-center">
+                        <span className="text-[10px] md:text-xs uppercase tracking-widest text-slate-400">Organization</span>
+                        <div className="font-bold text-white text-sm md:text-base">公益團體</div>
+                    </div>
+                </div>
+
+                <div className="absolute bottom-6 -right-2 md:bottom-8 md:-right-4 flex flex-col items-center group">
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-slate-900 border border-amber-400/30 flex items-center justify-center shadow-[0_0_30px_rgba(251,191,36,0.1)] transition-transform duration-300 group-hover:scale-110 text-amber-400">
+                        <Icons.Briefcase />
+                    </div>
+                    <div className="mt-2 text-center">
+                        <span className="text-[10px] md:text-xs uppercase tracking-widest text-slate-400">Business</span>
+                        <div className="font-bold text-white text-sm md:text-base">企業</div>
+                    </div>
+                </div>
+
+                <div className="absolute bottom-6 -left-2 md:bottom-8 md:-left-4 flex flex-col items-center group">
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-slate-900 border border-amber-400/30 flex items-center justify-center shadow-[0_0_30px_rgba(251,191,36,0.1)] transition-transform duration-300 group-hover:scale-110 text-amber-400">
+                        <Icons.Users />
+                    </div>
+                    <div className="mt-2 text-center">
+                        <span className="text-[10px] md:text-xs uppercase tracking-widest text-slate-400">Volunteer</span>
+                        <div className="font-bold text-white text-sm md:text-base">志工</div>
+                    </div>
+                </div>
+
+                <svg className="absolute inset-0 w-full h-full pointer-events-none text-slate-600" viewBox="0 0 360 360" fill="none">
+                    <path d="M200 40 Q280 60 300 140" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowhead)"/>
+                    <path d="M280 260 Q180 320 80 260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowhead)"/>
+                    <path d="M60 140 Q80 60 160 40" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowhead)"/>
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="currentColor" />
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+        );
+
+        const ClosingSlide = ({ data }) => (
+            <div className="flex flex-col md:flex-row items-center justify-center h-full w-full max-w-6xl mx-auto px-6 md:px-12 gap-8 md:gap-16 relative z-10">
+                <div className="w-full md:w-1/2 order-2 md:order-1 text-center md:text-right animate-slide-up flex flex-col justify-center md:items-end">
+                    <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">{data.title}</h1>
+                    <h2 className={`text-2xl md:text-3xl font-light mb-8 ${THEME_COLORS.accent}`}>{data.subtitle}</h2>
+                    <div className="glass-panel py-4 px-8 md:py-6 md:px-10 rounded-2xl inline-block shadow-lg text-left md:text-right">
+                        <p className="text-lg md:text-xl font-medium tracking-wide leading-relaxed">
+                            {data.content}
+                        </p>
+                    </div>
+                </div>
+                <div className="w-full md:w-1/2 order-1 md:order-2 flex justify-center md:justify-start animate-fade-in">
+                    <CycleEcosystem />
+                </div>
+            </div>
+        );
+
+        const SlideRenderer = ({ data }) => {
+            switch (data.type) {
+                case SlideType.TITLE: return <TitleSlide data={data} />;
+                case SlideType.PERSONA: return <PersonaSlide data={data} />;
+                case SlideType.CONCEPT: return <ConceptSlide data={data} />;
+                case SlideType.FEATURE: return <FeatureSlide data={data} />;
+                case SlideType.CLOSING: return <ClosingSlide data={data} />;
+                default: return null;
+            }
+        };
+
+        const Presentation = () => {
+            const [currentIndex, setCurrentIndex] = React.useState(0);
+            
+            const nextSlide = React.useCallback(() => {
+                if (currentIndex < SLIDES.length - 1) setCurrentIndex(c => c + 1);
+            }, [currentIndex]);
+
+            const prevSlide = React.useCallback(() => {
+                if (currentIndex > 0) setCurrentIndex(c => c - 1);
+            }, [currentIndex]);
+
+            React.useEffect(() => {
+                const handleKeyDown = (e) => {
+                    switch (e.key) {
+                        case 'ArrowRight':
+                        case 'ArrowDown':
+                        case ' ':
+                        case 'Enter':
+                            nextSlide();
+                            break;
+                        case 'ArrowLeft':
+                        case 'ArrowUp':
+                            prevSlide();
+                            break;
+                    }
+                };
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [nextSlide, prevSlide]);
+
+            const currentSlide = SLIDES[currentIndex];
+
+            return (
+                <div className={`w-screen h-screen ${THEME_COLORS.primary} ${THEME_COLORS.text} overflow-hidden relative selection:bg-amber-400 selection:text-slate-900`}>
+                    {/* Grid Background */}
+                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black,transparent)] pointer-events-none"></div>
+
+                    <div key={currentIndex} className="w-full h-full absolute inset-0 pt-12 pb-20">
+                        <SlideRenderer data={currentSlide} />
+                    </div>
+
+                    <div className="absolute bottom-0 left-0 right-0 h-16 glass-panel border-t-0 border-x-0 border-b-0 flex items-center justify-center px-6 md:px-12 z-50">
+                        <div className="flex items-center space-x-4 w-full max-w-2xl justify-center">
+                            <span className="font-mono text-slate-400 text-sm">
+                                {String(currentIndex + 1).padStart(2, '0')} / {String(SLIDES.length).padStart(2, '0')}
+                            </span>
+                            <div className="flex-1 h-1 bg-slate-800 rounded-full overflow-hidden">
+                                <div 
+                                    className="h-full bg-amber-400 transition-all duration-300 ease-out"
+                                    style={{ width: `${((currentIndex + 1) / SLIDES.length) * 100}%` }}
+                                ></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Presentation />);
+    </script>
+</body>
+</html>
