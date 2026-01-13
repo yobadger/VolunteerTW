@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Volunteer.TW Presentation</title>
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +44,7 @@
         }
     </script>
 
-    <!-- React & Babel Standalone (for running directly in browser) -->
+    <!-- React & Babel Standalone -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -53,16 +54,6 @@
         .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .gradient-text { background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
 </head>
 <body>
     <div id="root"></div>
@@ -101,7 +92,6 @@
                 title: '長者長青協會 總幹事 沈先生',
                 subtitle: '發展瓶頸：難以吸引年輕志工、資源匱乏',
                 content: '“我很需要有志工能幫忙操作電腦或跑腿送餐，但志工好難找，我不知道該怎麼宣傳需求，也沒有預算請專業人。”',
-                // UPDATED: Now points to root file
                 image: 'public/image/jake.png', 
             },
             {
@@ -110,7 +100,6 @@
                 title: '國小老師 李老師',
                 subtitle: '職責超載：教學與導護的兩難',
                 content: '“每天非常忙碌，需要關心學生，又要精進教學。但學校導護志工不夠，再累也不能犧牲孩子的安全。真心希望有人能幫我擔任導護。”',
-                // Amy / Teacher
                 image: 'public/image/amy.png', 
             },
             {
@@ -119,7 +108,6 @@
                 title: '前會計師 / 全職媽媽 歐媽媽',
                 subtitle: '渴望連結：專長閒置與社會脫節',
                 content: '“孩子上學時，我想利用我的專長做些有意義的事，也想認識新朋友，可我不知道哪裡有管道。”',
-                // Morning / Mom
                 image: 'public/image/morning.jpg', 
             },
             {
@@ -128,7 +116,6 @@
                 title: '大學生 王同學',
                 subtitle: '迷惘青年：有熱忱卻無處發揮',
                 content: '“我想透過志工累積社團或工作以外的經驗，對未來找工作會有幫助。幫助別人後收到的感謝也很有成就感，可是我不知道哪裡是我可以去幫忙的。”',
-                // Kevin / Student
                 image: 'public/image/kevin.png', 
             },
             {
@@ -148,8 +135,7 @@
                 'AI 主動推薦符合的機會',
                 '瀏覽可能有興趣的活動'
                 ],
-                // TODO: REPLACE_WITH_YOUR_IMAGE_URL
-                image: 'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&q=80&w=600'
+                image: 'public/image/1.jpg' 
             },
             {
                 id: 'feature-2',
@@ -161,8 +147,7 @@
                 '權重機制，鼓勵高專業人才投入',
                 '時間與技術的平衡'
                 ],
-                // TODO: REPLACE_WITH_YOUR_IMAGE_URL
-                image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600'
+                image: 'public/image/2.jpg' 
             },
             {
                 id: 'feature-3',
@@ -174,8 +159,8 @@
                 '數位證明：善行區塊鏈公益履歷',
                 '引導機制：限制兌換以鼓勵不同領域的投入（如科技業支持教育）'
                 ],
-                // TODO: REPLACE_WITH_YOUR_IMAGE_URL
-                image: 'https://images.unsplash.com/photo-1533227297464-9429738d1968?auto=format&fit=crop&q=80&w=600'
+                // UPDATED: Now an array of two images
+                image: ['public/image/3.jpg', 'public/image/4.jpg']
             },
             {
                 id: 'feature-4',
@@ -188,7 +173,7 @@
                 '累積服務時數',
                 '機構志工時數總量管制'
                 ],
-                // TODO: REPLACE_WITH_YOUR_IMAGE_URL
+                // UPDATED: Unsplash Image
                 image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=600'
             },
             {
@@ -230,7 +215,21 @@
                 <div className="h-[46px] w-[3px] bg-slate-800 absolute -start-[13px] md:-start-[17px] top-[178px] rounded-s-lg"></div>
                 <div className="h-[64px] w-[3px] bg-slate-800 absolute -end-[13px] md:-end-[17px] top-[142px] rounded-e-lg"></div>
                 <div className="rounded-[1.4rem] md:rounded-[2rem] overflow-hidden w-full h-full bg-slate-900 relative">
-                    <img src={image} className="w-full h-full object-cover opacity-90" alt="App Screen" />
+                    <img 
+                        src={image} 
+                        className="w-full h-full object-cover opacity-90" 
+                        alt="App Screen"
+                        onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
+                        }} 
+                    />
+                    {/* Error fallback */}
+                    <div style={{display:'none'}} className="absolute inset-0 bg-red-900/90 flex flex-col items-center justify-center text-white p-4 text-center z-50">
+                        <span className="text-3xl mb-2">⚠️</span>
+                        <span className="font-bold">Missing</span>
+                        <span className="text-xs mt-2 break-all bg-black/50 p-1 rounded font-mono">{image}</span>
+                    </div>
                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none"></div>
                 </div>
             </div>
@@ -257,24 +256,27 @@
         const PersonaSlide = ({ data }) => (
             <div className="flex flex-col md:flex-row items-center h-full max-w-7xl mx-auto px-6 md:px-12 gap-12">
                 <div className="w-full md:w-1/2 animate-slide-in-right order-2 md:order-1">
-                    <div className="relative aspect-[3/4] md:aspect-square w-full max-w-md mx-auto rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 group">
+                    {/* ASPECT RATIO 2/3 */}
+                    <div className="relative aspect-[2/3] md:aspect-[2/3] w-full max-w-md mx-auto rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 group">
+                        
+                        {/* THE IMAGE */}
                         <img 
                             src={data.image} 
-                            alt={data.title} 
-                            // ADDED: Error handler to visualize if image is broken
+                            alt={data.title}
                             onError={(e) => {
                                 e.target.style.display = 'none';
                                 e.target.nextSibling.style.display = 'flex';
                             }}
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
-                        {/* Fallback Display if image fails */}
-                        <div style={{display:'none'}} className="absolute inset-0 bg-red-900/80 flex items-center justify-center text-white font-bold text-center p-4">
-                            IMAGE NOT FOUND:<br/>{data.image}
+                        {/* RED ERROR BOX */}
+                        <div style={{display:'none'}} className="absolute inset-0 bg-red-900/90 flex flex-col items-center justify-center text-white p-4 text-center z-50">
+                            <span className="text-3xl mb-2">⚠️</span>
+                            <span className="font-bold">Image Not Found</span>
+                            <span className="text-xs mt-2 break-all bg-black/50 p-1 rounded font-mono">{data.image}</span>
                         </div>
-
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
-                        <div className="absolute bottom-6 left-6 right-6 pointer-events-none">
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                        <div className="absolute bottom-6 left-6 right-6">
                             <div className="text-2xl font-bold text-white">{data.title}</div>
                         </div>
                     </div>
@@ -316,42 +318,51 @@
             </div>
         );
 
-        const FeatureSlide = ({ data }) => (
-            // Decreased max-width to max-w-5xl and reduced gap to bring items closer to center
-            <div className="flex flex-col md:flex-row h-full max-w-5xl mx-auto items-center justify-center px-6 md:px-12 gap-6 md:gap-10">
-                
-                {/* Text Section - Adjusted to be closer to center */}
-                <div className="w-full md:w-1/2 animate-slide-in-right order-2 md:order-1 flex flex-col justify-center">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">{data.title}</h2>
-                    <h3 className="text-xl md:text-2xl text-slate-300 mb-10 font-light">{data.subtitle}</h3>
-                    
-                    <ul className="space-y-6">
-                        {data.content.map((point, idx) => (
-                            <li key={idx} className="flex items-start group">
-                                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-amber-400/10 flex items-center justify-center mr-4 text-amber-400 group-hover:bg-amber-400 group-hover:text-slate-900 transition-colors duration-300">
-                                    <span className="text-sm font-bold">{idx + 1}</span>
-                                </span>
-                                <span className="text-xl md:text-2xl text-slate-200 leading-tight pt-1">{point}</span>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+        const FeatureSlide = ({ data }) => {
+            const isMultiImage = Array.isArray(data.image);
 
-                {/* Phone Mockup Section - Adjusted to be closer to center */}
-                <div className="w-full md:w-1/2 animate-slide-up flex justify-center order-1 md:order-2">
-                    <div className="relative">
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[650px] bg-amber-400/20 blur-[80px] rounded-full -z-10"></div>
-                        <PhoneMockup image={data.image || ''} />
+            return (
+                <div className="flex flex-col md:flex-row h-full max-w-5xl mx-auto items-center justify-center px-6 md:px-12 gap-6 md:gap-10">
+                    <div className="w-full md:w-1/2 animate-slide-in-right order-2 md:order-1 flex flex-col justify-center">
+                        <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">{data.title}</h2>
+                        <h3 className="text-xl md:text-2xl text-slate-300 mb-10 font-light">{data.subtitle}</h3>
+                        <ul className="space-y-6">
+                            {data.content.map((point, idx) => (
+                                <li key={idx} className="flex items-start group">
+                                    <span className="flex-shrink-0 w-8 h-8 rounded-full bg-amber-400/10 flex items-center justify-center mr-4 text-amber-400 group-hover:bg-amber-400 group-hover:text-slate-900 transition-colors duration-300">
+                                        <span className="text-sm font-bold">{idx + 1}</span>
+                                    </span>
+                                    <span className="text-xl md:text-2xl text-slate-200 leading-tight pt-1">{point}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    
+                    <div className="w-full md:w-1/2 animate-slide-up flex justify-center order-1 md:order-2">
+                        {isMultiImage ? (
+                            <div className="flex flex-row justify-center gap-2 md:gap-4">
+                                <div className="scale-75 md:scale-90 origin-right transition-transform duration-500 hover:scale-100 hover:z-10">
+                                    <PhoneMockup image={data.image[0]} />
+                                </div>
+                                <div className="scale-75 md:scale-90 origin-left transition-transform duration-500 hover:scale-100 hover:z-10">
+                                    <PhoneMockup image={data.image[1]} />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="relative">
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[650px] bg-amber-400/20 blur-[80px] rounded-full -z-10"></div>
+                                <PhoneMockup image={data.image || ''} />
+                            </div>
+                        )}
                     </div>
                 </div>
-            </div>
-        );
+            );
+        };
 
         const CycleEcosystem = () => (
             <div className="relative w-64 h-64 md:w-80 md:h-80 mx-auto animate-pulse-slow">
                 <div className="absolute inset-0 border-2 border-dashed border-slate-700 rounded-full animate-[spin_60s_linear_infinite]"></div>
                 <div className="absolute inset-0 bg-amber-400/5 blur-3xl rounded-full"></div>
-
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group">
                     <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-slate-900 border border-amber-400/30 flex items-center justify-center shadow-[0_0_30px_rgba(251,191,36,0.1)] transition-transform duration-300 group-hover:scale-110 text-amber-400">
                         <Icons.Building />
@@ -361,7 +372,6 @@
                         <div className="font-bold text-white text-sm md:text-base">公益團體</div>
                     </div>
                 </div>
-
                 <div className="absolute bottom-6 -right-2 md:bottom-8 md:-right-4 flex flex-col items-center group">
                     <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-slate-900 border border-amber-400/30 flex items-center justify-center shadow-[0_0_30px_rgba(251,191,36,0.1)] transition-transform duration-300 group-hover:scale-110 text-amber-400">
                         <Icons.Briefcase />
@@ -371,7 +381,6 @@
                         <div className="font-bold text-white text-sm md:text-base">企業</div>
                     </div>
                 </div>
-
                 <div className="absolute bottom-6 -left-2 md:bottom-8 md:-left-4 flex flex-col items-center group">
                     <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-slate-900 border border-amber-400/30 flex items-center justify-center shadow-[0_0_30px_rgba(251,191,36,0.1)] transition-transform duration-300 group-hover:scale-110 text-amber-400">
                         <Icons.Users />
@@ -381,7 +390,6 @@
                         <div className="font-bold text-white text-sm md:text-base">志工</div>
                     </div>
                 </div>
-
                 <svg className="absolute inset-0 w-full h-full pointer-events-none text-slate-600" viewBox="0 0 360 360" fill="none">
                     <path d="M200 40 Q280 60 300 140" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowhead)"/>
                     <path d="M280 260 Q180 320 80 260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrowhead)"/>
@@ -457,7 +465,6 @@
 
             return (
                 <div className={`w-screen h-screen ${THEME_COLORS.primary} ${THEME_COLORS.text} overflow-hidden relative selection:bg-amber-400 selection:text-slate-900`}>
-                    {/* Grid Background */}
                     <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black,transparent)] pointer-events-none"></div>
 
                     <div key={currentIndex} className="w-full h-full absolute inset-0 pt-12 pb-20">
